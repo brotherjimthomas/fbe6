@@ -1,8 +1,8 @@
 # from dbhelper import DBHelper
 from flask import Flask
-import json
 from flask import render_template
 from flask import request
+import json
 
 import dbconfig
 if dbconfig.test:
@@ -19,25 +19,6 @@ def home():
     crimes = DB.get_all_crimes()
     crimes = json.dumps(crimes)
     return render_template("home.html", crimes=crimes)
-
-
-@app.route("/add", methods=["POST"])
-def add():
-    try:
-        data = request.form.get("userinput")
-        DB.add_input(data)
-    except Exception as e:
-        print(e)
-    return home()
-
-
-@app.route("/clear")
-def clear():
-    try:
-        DB.clear_all()
-    except Exception as e:
-        print(e)
-    return home()
 
 
 @app.route("/submitcrime", methods=["POST"])
